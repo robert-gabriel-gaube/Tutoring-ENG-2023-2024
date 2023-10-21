@@ -41,6 +41,7 @@ void process_parag(){
 			}
 		} 
 		else {
+			// End paragraph
 			if(ch == EOF) {
 				end_paragraph = 1;
 			}
