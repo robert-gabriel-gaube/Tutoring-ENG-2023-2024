@@ -36,8 +36,8 @@ void process_c_text() {
 		} 
 		else if(ch == '}') {
 			--open_braces;
+			// Prevents case when }} would be printed on 3 lines instead of 2
 			if(!is_last_char_newline) {
-				// Prevents case when }} would be printed on 3 lines instead of 2
 				putchar('\n');
 			}
 			print_spaces(open_braces); 
