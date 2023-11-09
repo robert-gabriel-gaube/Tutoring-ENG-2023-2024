@@ -20,8 +20,11 @@
     Questions ?
 */
 
+// Run make test_get_nibble after implementation
 unsigned get_nibble(unsigned number, unsigned nibblePosition);
+// Run make test_rotate_halves after implementation
 unsigned rotate_halves(unsigned number);
+// Run make test_set_nibble after implementation
 unsigned set_nibble_at_position(unsigned number, unsigned nibble, unsigned nibblePosition);
 
 /* unsigned rotate_middle_nibbles(unsigned number) {

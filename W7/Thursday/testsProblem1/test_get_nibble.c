@@ -4,7 +4,7 @@
 
 int main() {
     unsigned number = 0x76543210, passed = 0, total = 8;
-    printf("Testing get_nibble on number 0x%x\n", number);
+    printf("Testing get_nibble on number 0x%X\n", number);
 
     for(int idx = 0; idx < sizeof(number) * 2; ++idx) {
         int value = get_nibble(number, idx);
