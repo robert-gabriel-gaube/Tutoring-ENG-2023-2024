@@ -19,3 +19,19 @@
 
     Questions ?
 */
+
+unsigned get_nibble(unsigned number, unsigned nibblePosition);
+unsigned rotate_halves(unsigned number);
+unsigned set_nibble_at_position(unsigned number, unsigned nibble, unsigned nibblePosition);
+
+/* unsigned rotate_middle_nibbles(unsigned number) {
+    unsigned centralNibbleLeft = get_nibble(number, 4);
+    unsigned centralNibbleRight = get_nibble(number, 3);
+
+    number = rotate_halves(number);
+
+    number = set_nibble_at_position(number, centralNibbleLeft, 7);
+    number = set_nibble_at_position(number, centralNibbleRight, 0);
+
+    return number;
+}*/
