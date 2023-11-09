@@ -9,3 +9,9 @@ build_test_rotate_halves:
 
 test_rotate_halves: build_test_rotate_halves
 	./test_rotate_halves.exe
+
+build_test_set_nibble: 
+	gcc -Wall -o test_set_nibble.exe problem1.c testsProblem1/test_set_nibble.c
+
+test_set_nibble: build_test_set_nibble
+	./test_set_nibble.exe
