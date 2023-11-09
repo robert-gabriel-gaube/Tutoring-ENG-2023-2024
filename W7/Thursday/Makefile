@@ -15,3 +15,9 @@ build_test_set_nibble:
 
 test_set_nibble: build_test_set_nibble
 	./test_set_nibble.exe
+
+build_test_rotate_nibbles: 
+	gcc -Wall -o test_rotate_nibbles.exe problem1.c testsProblem1/test_rotate_nibbles.c
+
+test_rotate_nibbles: build_test_rotate_nibbles
+	./test_rotate_nibbles.exe

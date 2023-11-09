@@ -27,6 +27,9 @@ unsigned rotate_halves(unsigned number);
 // Run 'make test_set_nibble' after implementation
 unsigned set_nibble_at_position(unsigned number, unsigned nibble, unsigned nibblePosition);
 
+
+// Decomment this after implementing the above functions
+// Run command 'make test_rotate_nibbles' after decomenting
 /* unsigned rotate_middle_nibbles(unsigned number) {
     unsigned centralNibbleLeft = get_nibble(number, 4);
     unsigned centralNibbleRight = get_nibble(number, 3);
