@@ -1,0 +1,12 @@
+2 a) MS k B <-> LS k B
+
+Solve plan 
+	
+	1. Extract most significant k bits (Based on: n >> k & 1)
+	2. Extract least significant k bits (Based on: n >> k & 1)
+	3. Reset most significant k bits (Based on: n & ~(1 << k))
+	4. Reset least significant k bits (Based on: n & ~(1 << k))
+	5. Set most significant k bits as least significant k bits
+		(Based on (n | (1 << k))
+	6. Set least significant k bits as most significant k bits
+		(Based on (n | (1 << k))
