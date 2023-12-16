@@ -54,13 +54,5 @@ int main() {
     char s[] = "scoala";
     void *params[] = {&a, &f, &s, NULL};
     myprintf("Ana are %d mere si %f lei si merge la %s %%", params);
-
-    goto print_statement;
-
-    printf("adnwauiodnanwd");
-
-    print_statement: printf("AIA");
-
-
     return 0;
 }
