@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<link href="bootstrap.min.css" rel="stylesheet">
+    <link href="general.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitwise Operations</title>
+</head>
+<body>
+    <div class="visual">
+        <div class="col-md-2">
+            <div class="item">
+                <form>
+                    <label for="setNumber">Unsigned number on 8 bits (S)</label>
+                    <input type="number" id="setNumber" class="form-control" min="0" max="255" required>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="setS()">Set number</button>
+                    <p id="errorSetS" class="error"></p>
+                </form>
+            </div>
+            <div class="item">
+                <form>
+                    <label for="setBitPosition">Position</label>
+                    <input type="number" id="setBitPosition" class="form-control" min="0" max="7" required>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="setBit()">Set bit</button>
+                    <p id="errorSetBit" class="error"></p>
+                </form>
+            </div>
+            <div class="item">
+                <form>
+                    <label for="resetBitPosition">Position</label>
+                    <input type="number" id="resetBitPosition" class="form-control" min="0" max="7" required>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="resetBit()">Reset bit</button>
+                    <p id="errorResetBit" class="error"></p>
+                </form>
+            </div>
+            <div class="item">
+                <form>
+                    <label for="toggleBitPosition">Position</label>
+                    <input type="number" id="toggleBitPosition" class="form-control" min="0" max="7" required>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="toggleBit()">Toggle bit</button>
+                    <p id="errorToggleBit" class="error"></p>
+                </form>
+            </div>
+            <div class="item">
+                <form>
+                    <label for="getBitPosition">Position</label>
+                    <input type="number" id="getBitPosition" class="form-control" min="0" max="7" required>
+                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="getBit()">Get bit</button>
+                    <p id="errorGetBit" class="error"></p>
+                </form>
+            </div>
+            <div class="item">
+                <label for="animationSpeed">AnimationSpeed</label>
+                <input class="form-control" type="range" min="50" max="5000" value="1500" id="animationSpeed">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="instructions">
+                <h3>Explanations: (I - indices, S - number, M - mask, R - result)</h3>
+                <p class="instruction" id="instruction0"></p>
+                <p class="instruction" id="instruction1"></p>
+                <p class="instruction" id="instruction2"></p>
+                <p class="instruction" id="instruction3"></p>
+                <h4>Full command:</h4>
+                <p class="instruction" id="fullCommand"></p>
+            </div>
+            <div class="animation">
+                <h3>How it happens:</h3>
+                <div class="indices">
+                    <p class="title">I</p>
+                    <p>7</p>
+                    <p>6</p>
+                    <p>5</p>
+                    <p>4</p>
+                    <p>3</p>
+                    <p>2</p>
+                    <p>1</p>
+                    <p>0</p>
+                </div>
+                <div class="s number">
+                    <p class="title">S</p>
+                    <p id="sbit7" class="bitS">0</p>
+                    <p id="sbit6" class="bitS">0</p>
+                    <p id="sbit5" class="bitS">0</p>
+                    <p id="sbit4" class="bitS">0</p>
+                    <p id="sbit3" class="bitS">0</p>
+                    <p id="sbit2" class="bitS">0</p>
+                    <p id="sbit1" class="bitS">0</p>
+                    <p id="sbit0" class="bitS">0</p>
+                </div>
+                <div class="mask number">
+                    <p class="title">M</p>
+                    <p id="maskbit7" class="bitM">0</p>
+                    <p id="maskbit6" class="bitM">0</p>
+                    <p id="maskbit5" class="bitM">0</p>
+                    <p id="maskbit4" class="bitM">0</p>
+                    <p id="maskbit3" class="bitM">0</p>
+                    <p id="maskbit2" class="bitM">0</p>
+                    <p id="maskbit1" class="bitM">0</p>
+                    <p id="maskbit0" class="bitM">0</p>
+                </div>
+                <hr>
+                <div class="result number">
+                    <p id="operation"></p>
+                    <p id="resultbit7" class="bitR">0</p>
+                    <p id="resultbit6" class="bitR">0</p>
+                    <p id="resultbit5" class="bitR">0</p>
+                    <p id="resultbit4" class="bitR">0</p>
+                    <p id="resultbit3" class="bitR">0</p>
+                    <p id="resultbit2" class="bitR">0</p>
+                    <p id="resultbit1" class="bitR">0</p>
+                    <p id="resultbit0" class="bitR">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
