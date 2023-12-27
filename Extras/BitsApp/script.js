@@ -4,7 +4,8 @@ var operation = null;
 var instruction_idx = 0;
 
 function getAnimationSpeed() {
-    return document.getElementById("animationSpeed").value;
+    console.log(5050 - document.getElementById("animationSpeed").value);
+    return 5050 - document.getElementById("animationSpeed").value;
 }
 
 function setInstruction(idx, instruction) {
