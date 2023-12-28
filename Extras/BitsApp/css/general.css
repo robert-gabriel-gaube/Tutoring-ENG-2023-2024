@@ -3,9 +3,6 @@ body {
     background-color: #0F0F0F;
     color: rgba(245, 245, 245, 0.788);
 }
-* {
-    box-sizing: border-box;
-}
 
 /* Forms */
 .form-control {

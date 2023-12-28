@@ -1,0 +1,18 @@
+/* Generals */
+.index, .bitS, .title, .bitM, #operation, .bitR{
+    width: 30px;
+}
+#numberInput {
+    width: 200px;
+}
+
+/* Code */
+.instruction {
+    font-family: monospace;
+}
+.variable {
+    padding-left: 30px;
+}
+th{
+    vertical-align: top;
+}

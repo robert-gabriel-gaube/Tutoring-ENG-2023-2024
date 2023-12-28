@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/general.css" rel="stylesheet">
+    <link href="css/algorithms.css" rel="stylesheet">
+    <title>Bitwise Algorithms</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">  
+          <div class="nocollapse navbar-nocollapse">
+            <form class="navbar-form navbar-left">
+                <button type="button" class="btn btn-default" onclick="naiveCount()">Naive count 1 bits</button>
+                <button type="button" class="btn btn-default" onclick="extractNibbles()">Extract nibbles</button>
+                <button type="button" class="btn btn-default" onclick="reverseNibbles()">Reverse nibbles</button>
+                <button type="button" class="btn btn-default" onclick="kernighan()">Kernighan count 1 bits</button>
+                <div class="form-group">
+                    <input type="number" id="numberInput" class="form-control" min="0" max="65535" placeholder="Number on 16 bits">
+                </div>
+                <p class="error" id="numberError"></p>
+            </form>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <label for="animationSpeed">Animation Speed</label>
+                    <input class="form-control" type="range" min="1000" max="5000" value="4000" id="animationSpeed" oninput="setAnimationSpeed()">
+                </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="visual">
+        <div class="col-md-3">
+            <h3>Code:</h3>
+            <div class="code">
+                <p class="instruction" id="instruction0"></p>
+                <p class="instruction" id="instruction1"></p>
+                <p class="instruction" id="instruction2"></p>
+                <p class="instruction" id="instruction3"></p>
+                <p class="instruction" id="instruction4"></p>
+                <p class="instruction" id="instruction5"></p>
+                <p class="instruction" id="instruction6"></p>
+                <p class="instruction" id="instruction7"></p>
+                <p class="instruction" id="instruction8"></p>
+                <p class="instruction" id="instruction9"></p>
+                <p class="instruction" id="instruction10"></p>
+                <p class="instruction" id="instruction11"></p>
+                <p class="instruction" id="instruction12"></p>
+                <p class="instruction" id="instruction13"></p>
+                <p class="instruction" id="instruction14"></p>
+                <p class="instruction" id="instruction15"></p>
+                <p class="instruction" id="instruction16"></p>
+                <p class="instruction" id="instruction17"></p>
+            </div>
+            <hr>
+            <h3>Variables:</h3>
+            <div class="variables">
+                <table>
+                    <tr>
+                        <th>
+                            <p class="variable" id="variable0"></p>
+                            <p class="variable" id="variable1"></p>
+                            <p class="variable" id="variable2"></p>
+                            <p class="variable" id="variable3"></p>
+                            <p class="variable" id="variable4"></p>
+                        </th>
+                        <th>
+                            <p class="variable" id="variable5"></p>
+                            <p class="variable" id="variable6"></p>
+                            <p class="variable" id="variable7"></p>
+                            <p class="variable" id="variable8"></p>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="animation">
+                <h3>How it happens:</h3>
+                <div class="indices">
+                    <p class="title">I</p>
+                    <p class="index">15</p>
+                    <p class="index">14</p>
+                    <p class="index">13</p>
+                    <p class="index">12</p>
+                    <p class="index">11</p>
+                    <p class="index">10</p>
+                    <p class="index">9</p>
+                    <p class="index">8</p>
+                    <p class="index">7</p>
+                    <p class="index">6</p>
+                    <p class="index">5</p>
+                    <p class="index">4</p>
+                    <p class="index">3</p>
+                    <p class="index">2</p>
+                    <p class="index">1</p>
+                    <p class="index">0</p>
+                </div>
+                <div class="s number">
+                    <p class="title" id="number">S</p>
+                    <p id="sbit15" class="bitS">0</p>
+                    <p id="sbit14" class="bitS">0</p>
+                    <p id="sbit13" class="bitS">0</p>
+                    <p id="sbit12" class="bitS">0</p>
+                    <p id="sbit11" class="bitS">0</p>
+                    <p id="sbit10" class="bitS">0</p>
+                    <p id="sbit9" class="bitS">0</p>
+                    <p id="sbit8" class="bitS">0</p>
+                    <p id="sbit7" class="bitS">0</p>
+                    <p id="sbit6" class="bitS">0</p>
+                    <p id="sbit5" class="bitS">0</p>
+                    <p id="sbit4" class="bitS">0</p>
+                    <p id="sbit3" class="bitS">0</p>
+                    <p id="sbit2" class="bitS">0</p>
+                    <p id="sbit1" class="bitS">0</p>
+                    <p id="sbit0" class="bitS">0</p>
+                </div>
+                <div class="mask number">
+                    <p class="title" id="mask">M</p>
+                    <p id="maskbit15" class="bitM">0</p>
+                    <p id="maskbit14" class="bitM">0</p>
+                    <p id="maskbit13" class="bitM">0</p>
+                    <p id="maskbit12" class="bitM">0</p>
+                    <p id="maskbit11" class="bitM">0</p>
+                    <p id="maskbit10" class="bitM">0</p>
+                    <p id="maskbit9" class="bitM">0</p>
+                    <p id="maskbit8" class="bitM">0</p>
+                    <p id="maskbit7" class="bitM">0</p>
+                    <p id="maskbit6" class="bitM">0</p>
+                    <p id="maskbit5" class="bitM">0</p>
+                    <p id="maskbit4" class="bitM">0</p>
+                    <p id="maskbit3" class="bitM">0</p>
+                    <p id="maskbit2" class="bitM">0</p>
+                    <p id="maskbit1" class="bitM">0</p>
+                    <p id="maskbit0" class="bitM">0</p>
+                </div>
+                <hr>
+                <div class="result number">
+                    <p id="operation"></p>
+                    <p id="resultbit15" class="bitR">0</p>
+                    <p id="resultbit14" class="bitR">0</p>
+                    <p id="resultbit13" class="bitR">0</p>
+                    <p id="resultbit12" class="bitR">0</p>
+                    <p id="resultbit11" class="bitR">0</p>
+                    <p id="resultbit10" class="bitR">0</p>
+                    <p id="resultbit9" class="bitR">0</p>
+                    <p id="resultbit8" class="bitR">0</p>
+                    <p id="resultbit7" class="bitR">0</p>
+                    <p id="resultbit6" class="bitR">0</p>
+                    <p id="resultbit5" class="bitR">0</p>
+                    <p id="resultbit4" class="bitR">0</p>
+                    <p id="resultbit3" class="bitR">0</p>
+                    <p id="resultbit2" class="bitR">0</p>
+                    <p id="resultbit1" class="bitR">0</p>
+                    <p id="resultbit0" class="bitR">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/algorithms-script.js"></script>
+</body>
+</html>

@@ -33,6 +33,10 @@ function resetValues() {
 }
 
 function isValid(element, min, max, value) {
+    if(isNaN(value)) {
+        element.textContent = "Enter a number omg";
+        return 0;
+    }
     if (value < min) {
         element.textContent = "Number should be >= " + min;
         return 0;
