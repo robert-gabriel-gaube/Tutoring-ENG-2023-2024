@@ -1,3 +1,16 @@
+/*
+    Row A. CSV files A .csv (comma separated values) file contains the grade situation 
+    for a class of students. Each line contains fields separated by commas. The first field 
+    is the student name (one word)(up to 50 characters), followed by up to 10 fields with 
+    real-numbered grades; any remainder of the line is ignored.
+
+    Give the filename as the first command line argument and read the file using an appropriate 
+    data structure; you may assume there are at most 200 students. Compute averages 
+    for the students that have at least 5 passing grades. Sort students in decreasing order 
+    of their grade averages; break ties alphabetically. Print the sorted list with grade averages.
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -108,6 +121,7 @@ FILE *open_file(const char *path) {
     return f;
 }
 
+// 3. Sort students based on criteria
 int compare_students(const void *a, const void *b) {
     // Cast a and b to STUDENT* and then extract avg_grade from them
     float avg_grade_a = ((STUDENT*)a) -> avg_grade;
@@ -147,7 +161,6 @@ int main(int argc, char *argv[]) {
         perror("Error with closing file");
         exit(1);
     }
-
 
     return 0;
 }
