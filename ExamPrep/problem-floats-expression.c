@@ -57,7 +57,7 @@ float evaluate_expression(const char *expression) {
 }
 
 int main() {
-    float result = evaluate_expression("12.10+3.20-0.30+5+10.50-0.50 ");
+    float result = evaluate_expression("1.5-0.5+1.5-");
     printf("%f\n", result);
     return 0;
 }
