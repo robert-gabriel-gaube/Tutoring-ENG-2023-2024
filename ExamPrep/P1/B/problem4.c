@@ -6,6 +6,24 @@
 #define CHUNK_SIZE 10
 #define MAX_PAIRS 100
 
+/*
+    Explanations:
+        So I assume that key=value is correct on every line and that every
+        line is arbitrary long, therefore we need to read in chunks and 
+        store the values in a key value pair.
+
+        My thinking process is like this:
+            - We read chunks of a line until we read a '\n' or we reach 
+                EOF (in which case we return a empty PAIR)
+            - If a chunk contains '=' append the chars from start of chunk
+                until '=' into key (if they exist) and from '=' to the end 
+                of chunk to the value (if they exist).
+            - If it doesn't contain '=' append to key or value, 
+                if we didn't find '=' yet, append to key
+                else, append to value
+            - After that sort and print
+*/
+
 typedef enum {
     key, 
     value
@@ -41,18 +59,42 @@ void close_file(FILE *f) {
         exit(EXIT_FAILURE);
     }
 }
-
 char last_char_of_string(char *chunk) {
     return chunk[strlen(chunk) - 1];
+}
+int compare_pairs(const void *p1, const void *p2) {
+    PAIR* pair1 = (PAIR*)p1;
+    PAIR* pair2 = (PAIR*)p2;
+
+    int compare_result = strcmp(pair1->key, pair2->key);
+    if(compare_result != 0) {
+        return compare_result;
+    } else {
+        return strcmp(pair1->value, pair2->value);
+    }
+}
+void print_pairs(DICT dict) {
+    for(int idx = 0; idx < dict.number_of_pairs; ++idx) {
+        printf("PAIR #%d: (%s) = (%s)\n", idx, dict.pairs[idx].key, dict.pairs[idx].value);
+    }
+    printf("\n");
+}
+void dealloc_dict(DICT dict) {
+    for(int idx = 0; idx < dict.number_of_pairs; ++idx) {
+        free(dict.pairs[idx].key);
+        free(dict.pairs[idx].value);
+    }
 }
 
 // Problem solving functions
 
+// Make additional space into key or value based on the value of field 
+// and return the changed pair
 PAIR make_additional_space(PAIR pair, int extra, FIELD field) {
     int field_length = 0;
     char *field_pointer = NULL;
 
-    // Extract the needed field length
+    // Extract the needed field
     if(field == key) {
         field_length = pair.key_length;
         field_pointer = pair.key;
@@ -62,6 +104,7 @@ PAIR make_additional_space(PAIR pair, int extra, FIELD field) {
     }
 
     // Reallocate for extra space
+    // + 1 for '\0'
     int total_number_of_chars = field_length + extra + 1;
     char *aux = realloc(field_pointer, total_number_of_chars * sizeof(char));
     if(aux == NULL) {
@@ -70,11 +113,14 @@ PAIR make_additional_space(PAIR pair, int extra, FIELD field) {
     }
     field_pointer = aux;
 
+    // if field_length is 0 we need to place a '\0' into the string
+    // the rest of the times strcat will take care of that '\0'
     if(field_length == 0) {
         field_pointer[0] = '\0';
     }
 
     // Place new values in pair
+    // - 1 because we don't count '\0'
     if(field == key) {
         pair.key = field_pointer;
         pair.key_length = total_number_of_chars - 1;
@@ -87,23 +133,26 @@ PAIR make_additional_space(PAIR pair, int extra, FIELD field) {
 }
 
 PAIR process_line(FILE *input) {
+    // Initialize pair with default values
     PAIR pair = {0, 0, NULL, NULL};
 
+    // Give a default value to chunk so it can enter the while
     char chunk[CHUNK_SIZE] = "aux";
 
     bool concat_into_key = true;
 
     while(last_char_of_string(chunk) != '\n') {
-        // If we get to EOF return pair with key, value equal to NULL
+        // If we get to EOF return pair with default values
         if(fgets(chunk, CHUNK_SIZE, input) == NULL) {
             return pair;
         }
 
         char *equal = strchr(chunk, '=');
+        // If we find a '=' in our chunk
         if(equal != NULL) {
             concat_into_key = false;
 
-            // Copy into key if '=' is not the first char
+            // Copy into key from start until equal if '=' is not the first char
             if(equal != chunk) {
                 int number_of_characters = equal - chunk;
                 pair = make_additional_space(pair, number_of_characters, key);
@@ -111,7 +160,7 @@ PAIR process_line(FILE *input) {
                 pair.key[pair.key_length] = '\0';
             }
 
-            // Copy into value if '=' is not the last char
+            // Copy into value from equal + 1 until the end if '=' is not the last char
             if(last_char_of_string(chunk) != '=') {
                 pair = make_additional_space(pair, strlen(equal + 1), value);
                 strcpy(pair.value, equal + 1);
@@ -119,6 +168,7 @@ PAIR process_line(FILE *input) {
 
         } else {
             // If there's not an equal in chunk just append chunk into a field
+
             if(concat_into_key) {
                 pair = make_additional_space(pair, CHUNK_SIZE - 1, key);
                 strcat(pair.key, chunk);
@@ -141,6 +191,7 @@ DICT process_lines(FILE *input) {
 
     PAIR pair = process_line(input);
 
+    // Add all the pairs to a dictionary
     while(pair.key_length != 0) {
         dict.pairs[dict.number_of_pairs] = pair;
         ++dict.number_of_pairs;
@@ -149,31 +200,6 @@ DICT process_lines(FILE *input) {
     }
 
     return dict;
-}
-
-int compare_pairs(const void *p1, const void *p2) {
-    PAIR* pair1 = (PAIR*)p1;
-    PAIR* pair2 = (PAIR*)p2;
-
-    int compare_result = strcmp(pair1->key, pair2->key);
-    if(compare_result != 0) {
-        return compare_result;
-    } else {
-        return strcmp(pair1->value, pair2->value);
-    }
-}
-void print_pairs(DICT dict) {
-    for(int idx = 0; idx < dict.number_of_pairs; ++idx) {
-        printf("PAIR #%d: (%s) = (%s)\n", idx, dict.pairs[idx].key, dict.pairs[idx].value);
-    }
-    printf("\n");
-}
-
-void dealloc_dict(DICT dict) {
-    for(int idx = 0; idx < dict.number_of_pairs; ++idx) {
-        free(dict.pairs[idx].key);
-        free(dict.pairs[idx].value);
-    }
 }
 
 void print_sorted(FILE *input) {
