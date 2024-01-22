@@ -33,10 +33,18 @@ int oct_to_dec(int number) {
     }
 }
 
+void print_values(int num_numbers, int min, int max) {
+    if(num_numbers) {
+        printf("Num numbers: %d, where min: %X, and max: %X\n", num_numbers, min, max);
+    } else {
+        printf("No valid numbers on this line\n");
+    }
+}
+
 void read_input() {
     bool is_last_char_a_valid_separator = true;
     char current_char;
-    int min = BIG_VALUE, max = 0;
+    int min = BIG_VALUE, max = 0, num_numbers = 0;
 
     while((current_char = getchar()) != EOF) {
         if(is_last_char_a_valid_separator && isodigit(current_char)) {
@@ -48,18 +56,34 @@ void read_input() {
             // Test if valid separator after
             current_char = getchar();
 
-            if(current_char == ' ' || current_char == EOF) {
+            if(current_char == ' ' || current_char == EOF || current_char == '\n') {
+                // Is valid number
+                ++num_numbers;
                 number = oct_to_dec(number);
 
                 max = number > max ? number : max;
                 min = number < min ? number : min;
+
+                // End of line
+                if(current_char == '\n') {
+                    print_values(num_numbers, min, max);
+                    min = BIG_VALUE, max = 0, num_numbers = 0;
+                    continue;
+                } 
             } else {
+                // Is not a valid separator
                 is_last_char_a_valid_separator = false;
             }
         }
         is_last_char_a_valid_separator = (current_char == ' ');
+
+        if(current_char == '\n') {
+            is_last_char_a_valid_separator = true;
+            print_values(num_numbers, min, max);
+            min = BIG_VALUE, max = 0, num_numbers = 0;
+        }
     }
-    printf("\nMin: %X Max: %X\n", min, max);
+
 }
 
 int main() {
