@@ -10,12 +10,13 @@ int digit_value(char c) {
     return c - '0';
 }
 
+// Read and transform to decimal
 int read_number() {
     char current_char = getchar();
     int num = 0;
 
     while(isodigit(current_char)) {
-        num = num * 10 + digit_value(current_char);
+        num = num * 8 + digit_value(current_char);
         current_char = getchar();
     }
 
@@ -23,14 +24,6 @@ int read_number() {
     ungetc(current_char, stdin);
 
     return num;
-}
-
-int oct_to_dec(int number) {
-    if(number) {
-        return number % 10 + 8 * oct_to_dec(number / 10);
-    } else {
-        return 0;
-    }
 }
 
 void print_values(int num_numbers, int min, int max) {
@@ -59,7 +52,6 @@ void read_input() {
             if(current_char == ' ' || current_char == EOF || current_char == '\n') {
                 // Is valid number
                 ++num_numbers;
-                number = oct_to_dec(number);
 
                 max = number > max ? number : max;
                 min = number < min ? number : min;
