@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #define MAX_LEN 100
 
+// Move string to the right
 void make_space(char *location, unsigned no_spaces) {
     char *aux = strdup(location);
 
@@ -29,6 +30,7 @@ void make_space(char *location, unsigned no_spaces) {
     free(aux);
 }
 
+// Move part of the string left
 void erase_space(char *location, unsigned no_spaces) {
     char *aux = strdup(location);
 
@@ -40,23 +42,30 @@ void erase_space(char *location, unsigned no_spaces) {
 void replace_occurences(char s1[], char s2[], char s3[]) {
     char *ptr = s1;
     char *occurence = strstr(s1, s2);
-    unsigned no_spaces;
 
+    // How many spaces we need to erase or add
+    unsigned no_spaces;
     if(strlen(s2) > strlen(s3)) {
         no_spaces = strlen(s2) - strlen(s3);
     } else {
         no_spaces = strlen(s3) - strlen(s2);
     }
 
+    // While we find s2 in s1
     while(occurence != NULL) {
         if(strlen(s2) > strlen(s3)) {
+            // We need to erase space
             erase_space(occurence, no_spaces);
         } else if(strlen(s2) < strlen(s3)) {
+            // We need to add space
             make_space(occurence, no_spaces);
         }
+        // Copy s3 in place of s2
         strncpy(occurence, s3, strlen(s3));
 
+        // Jump over the currently replaced string, prevents recursivness.
         ptr = occurence + strlen(s3);
+        // Go to next occurence
         occurence = strstr(ptr, s2);
     }
 }

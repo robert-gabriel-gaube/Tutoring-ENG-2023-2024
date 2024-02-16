@@ -22,22 +22,31 @@
 
 void process_line(char *line) {
     char *space_after = line;
+
+    // Is first char a digit ?
     if(isdigit(*line)) {
+        // There might be a valid number at the start of the line
+        // Transform the string to number
         long number = strtol(line, &space_after, 10);
+
         if(*space_after == ' ' || *space_after == '\n') {
+            // Is valid number
             printf("Extracted number: %ld\n", number);
         }
     }
 
+    // Go to next digit
     char *ptr = space_after + strcspn(space_after, "0123456789");
     while(*ptr != '\0') { 
         long number = strtol(ptr, &space_after, 10);
 
+        // is separated by ' ' and ' ' or ' ' and '\n'
         if(*(ptr - 1) == ' ' && (*space_after == ' ' || *space_after == '\n')) {
             // Valid number
             printf("Extracted number: %ld\n", number);
         } 
 
+        // Go to next digit
         ptr = space_after + strcspn(space_after, "0123456789");
     }
 }
@@ -51,11 +60,13 @@ void process_file(FILE *input_file) {
 }
 
 int main(int argc, char *argv[]) {
+    // Verify there are enough arguments
     if(argc != 2) {
         printf("Usage ./p <file_name>\n");
         exit(1);
     }
 
+    // Open file
     FILE *input_file = fopen(argv[1], "r");
     if(input_file == NULL) {
         printf("Error while opening file\n");
@@ -64,6 +75,7 @@ int main(int argc, char *argv[]) {
 
     process_file(input_file);
 
+    // Close file
     if(fclose(input_file) != 0) {
         printf("Error while closing file\n");
         exit(1);
