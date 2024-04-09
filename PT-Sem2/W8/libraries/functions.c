@@ -1,6 +1,6 @@
 #include <math.h>
-
-#define N 3
+#include <stdio.h>
+#include "functions.h"
 
 float bisect(float (*func)(float), float a, float b, float epsilon) {
     if(func(a) * func(b) > 0) {

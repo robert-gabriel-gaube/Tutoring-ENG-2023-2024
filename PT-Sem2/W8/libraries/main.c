@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "functions.h"
+#include "functions.h"
 #define N 3
 
 float func(float x) {
