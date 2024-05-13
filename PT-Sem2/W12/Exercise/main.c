@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+// Compile this with gcc -Wall -o p main.c test.c
 int main() {
 
     // Secret takes a parameter, a string as a password, if the password
@@ -33,11 +34,14 @@ int main() {
     // 1. The values at positions 0, 0 and 1, 1 are between 15 - 24
     // 2. The values at positions 0, 1 and 1, 0 are between 3 - 8
 
-    int key[2][2] = {{19, 3}, {5, 24}};
+    // HINT: The decripted message will be a human readable set of words :)
+    // something like WATCHTHIS
+
+    int key[2][2] = {{15, 3}, {3, 15}};
     const char *decripted = hill_cypher_decript("HERE", key);
     printf("Decripted message: %s\n", decripted);
 
-    // Tell me what you got from the secret and the decripted message
+    // Tell me what you got from as the decripted message
 
     return 0;
 }
