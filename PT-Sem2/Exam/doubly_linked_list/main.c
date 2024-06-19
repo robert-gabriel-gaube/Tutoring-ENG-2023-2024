@@ -33,15 +33,32 @@ NODE* create_node(int number) {
     return node;
 }
 
-LIST add_new_node(LIST list, int number) {
+LIST add_new_node(LIST list, int number, int (*compare)(int, int)) {
     if(list.head == NULL) { // The list is empty
         list.head = list.tail = create_node(number);
     } else {
         NODE *node = create_node(number);
-        node->before = list.tail;
-        list.tail->after = node;
+        NODE *current = list.head;
 
-        list.tail = node;
+        // Find the position of insertion
+        while(current != NULL && compare(current->information, number) < 0) {
+            current = current -> after;
+        }
+
+        if(current == list.head) { // If we add to the front
+            node->after = list.head;
+            list.head->before = node;
+            list.head = node;
+        } else if(current == NULL) { // If we add to the end
+            list.tail->after = node;
+            node->before = list.tail;
+            list.tail = node;
+        } else {
+            node->before = current->before;
+            node->after = current;
+            current->before->after = node;
+            current->before = node;
+        }
 
         // // In case of circular doubly linked list
         // list.tail->after = list.head;
@@ -85,13 +102,17 @@ LIST dealloc_list(LIST list) {
     return list;
 }
 
+int compare(int a, int b) {
+    return a - b;
+}
+
 int main() {
     LIST list = new_list();
     
-    list = add_new_node(list, 2);
-    list = add_new_node(list, 3);
-    list = add_new_node(list, 4);
-    list = add_new_node(list, 5);
+    list = add_new_node(list, 3, compare);
+    list = add_new_node(list, 2, compare);
+    list = add_new_node(list, 5, compare);
+    list = add_new_node(list, 4, compare);
 
     print_list(list);
     print_reverse_order(list);
